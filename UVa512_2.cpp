@@ -1,4 +1,3 @@
-//why WA??? pass udebug
 #include <cstdio>
 #include <cstring>
 #include <vector>
@@ -60,7 +59,7 @@ struct opration
                     }
                     else if (num[i] == r)
                     {
-                        return -1;
+                        return 1;
                     }
                 }
 
@@ -76,7 +75,7 @@ struct opration
                     }
                     else if (num[i] == c)
                     {
-                        return -1;
+                        return 1;
                     }
                 }
 
@@ -119,12 +118,12 @@ int main()
     int Spreadsheet = 1;
     int qr, qc;//query row, query column
     vector<opration> operaVec;
-    int deleted;
+    bool deleted;
 
     while (scanf("%d%d", &r, &c), r)
     {
         scanf("%d", &m);
-        operaVec = vector<opration>(m);
+        operaVec.resize(m);
 
         for (int i = 0; i < m; ++i)
         {
@@ -146,11 +145,13 @@ int main()
             scanf("%d%d", &qr, &qc);
             printf("Cell data in (%d,%d) ", qr, qc);
 
-            for (int i = 0; i < m; ++i)
+            deleted = false;//never foget it!!! m may be 0
+
+            for(auto &op : operaVec)
             {
-                deleted = operaVec[i].execute(qr, qc);
-                if (deleted)
+                if (op.execute(qr, qc))
                 {
+                    deleted = true;
                     break;
                 }
             }
